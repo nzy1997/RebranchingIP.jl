@@ -71,27 +71,32 @@ function ip_branching_table(ip::IP,branching_var::Vector{Int})
     x = ip.x
     table = Vector{Vector{Int}}()
     # min_obj_val = ip.lower_bound
+    model,x_new  = ip.model,ip.x
+    undo = relax_integrality(model)
     for i in 1:2^bit_length
-        copy_model,x_new  = copy_JuMP_model(ip.model)
-        undo = relax_integrality(copy_model)
+        constraint_list = []
         for j in 1:length(branching_var)
             if readbit(i,j) == 1
-                @constraint(copy_model, x_new[branching_var[j]] <= floor(ip.lower_bound_vec[branching_var[j]]))
+                push!(constraint_list, @constraint(model, x_new[branching_var[j]] <= floor(ip.lower_bound_vec[branching_var[j]])))
             else
-                @constraint(copy_model, x_new[branching_var[j]] >= ceil(ip.lower_bound_vec[branching_var[j]]))
+                push!(constraint_list, @constraint(model, x_new[branching_var[j]] >= ceil(ip.lower_bound_vec[branching_var[j]])))
             end
         end
-        optimize!(copy_model)
+        optimize!(model)
 
-        if !is_solved_and_feasible(copy_model)
+        if !is_solved_and_feasible(model)
+            delete.(model, constraint_list)
             continue
         end
-        obj_val = objective_value(copy_model)
+        obj_val = objective_value(model)
         if obj_val > ip.upper_bound
+            delete.(model, constraint_list)
             continue
         end
         push!(table, [i])
+        delete.(model, constraint_list)
     end
+    undo()
     return BranchingTable(bit_length,table)
 end
 
@@ -112,4 +117,9 @@ function ip_optimal_branching_rule(table::BranchingTable, solver::AbstractSetCov
     candidates = OptimalBranchingCore.candidate_clauses(table)
     size_reductions = [sum(i -> readbit(cl.mask,i),1:table.bit_length)  for cl in candidates]
     return minimize_γ(table, candidates, size_reductions, solver)
+end
+
+function solve_mis(graph,k::Int)
+    ip = get_IP(graph)
+    branching(ip,k)
 end
