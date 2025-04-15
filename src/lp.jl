@@ -1,5 +1,4 @@
-function get_model(graph)
-    problem = MaximalIS(graph)
+function get_model(problem)
     cons = constraints(problem)
     nsc = ProblemReductions.num_variables(problem)
     maxN = maximum([length(c.variables) for c in cons])
@@ -12,7 +11,6 @@ function get_model(graph)
     JuMP.set_silent(model)
 
     x = JuMP.@variable(model, 0 <= x[i = 1:nsc] <= 1,Int)
-    # x = MOI.add_variables(model, nsc)
 
     for con in cons
         f_vec = findall(!,con.specification)
@@ -100,19 +98,6 @@ function ip_branching_table(ip::IP,branching_var::Vector{Int})
     return BranchingTable(bit_length,table)
 end
 
-struct NumberOfConstraints <: AbstractMeasure end
-
-function OptimalBranchingCore.measure(ip::IP, ::NumberOfConstraints)
-    return  - num_constraints(ip.model; count_variable_in_set_constraints = false)
-end
-
-function copy_JuMP_model(model)
-    copy_model = copy(model)
-    set_optimizer(copy_model, SCIP.Optimizer)
-    JuMP.set_silent(copy_model)
-    return copy_model, copy_model[:x]
-end
-
 function ip_optimal_branching_rule(table::BranchingTable, solver::AbstractSetCoverSolver)
     candidates = OptimalBranchingCore.candidate_clauses(table)
     size_reductions = [sum(i -> readbit(cl.mask,i),1:table.bit_length)  for cl in candidates]
@@ -120,6 +105,14 @@ function ip_optimal_branching_rule(table::BranchingTable, solver::AbstractSetCov
 end
 
 function solve_mis(graph,k::Int)
-    ip = get_IP(graph)
+    problem = MaximalIS(graph)
+    ip = get_IP(problem)
     branching(ip,k)
+end
+
+function copy_JuMP_model(model)
+    copy_model = copy(model)
+    set_optimizer(copy_model, SCIP.Optimizer)
+    JuMP.set_silent(copy_model)
+    return copy_model, copy_model[:x]
 end

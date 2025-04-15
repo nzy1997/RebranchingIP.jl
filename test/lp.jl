@@ -1,22 +1,26 @@
 using RebranchingIP
- using Test
+using Test
+using ProblemReductions
 using ProblemReductions.Graphs
 using RebranchingIP: get_model,get_IP,ip_branching_table,ip_optimal_branching_rule
 using OptimalBranchingCore
 
-@testset "getmodel" begin
+@testset "get_model" begin
     g = smallgraph(:petersen)
-    model,x = get_model(g)
+    problem = MaximalIS(g)
+    model = get_model(problem)
+    @show model
 
-    # @constraint(model,x[1] == 1)
-    JuMP.optimize!(model)
-    @show value.(x)
-    @show objective_value(model)
+end
+@testset "solve_mis" begin
+    g = smallgraph(:petersen)
+    res, _ , branch_num  = solve_mis(g,3)
+    @test res == -4
 
-    @constraint(model,x[1] == 1)
-    JuMP.optimize!(model)
-    @show value.(x)
-    @show objective_value(model)
+    g = random_regular_graph(30, 3; seed = 2134)
+    res, _ , branch_num  = solve_mis(g,5)
+    @show res, branch_num
+    @test res == -13
 end
 
 @testset "branching_table" begin
@@ -27,13 +31,3 @@ end
     # ip_optimal_branching_rule(tbl, IPSolver())
     branching(ip, 1)
 end
-
-model = Model()
-
-@variable(model, x)
-is_valid(model, x)
-
-model_copy = copy(model)
-
-x_new = model[:x]
-is_valid(model_copy, x_new)

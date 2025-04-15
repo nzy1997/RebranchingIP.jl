@@ -17,7 +17,7 @@ function branching(ip::IP,k::Int)
     if isempty(tbl.table)
         return ip.upper_bound,ip.upper_bound_vec,1
     end
-    res = ip_optimal_branching_rule(tbl, IPSolver())
+    res = ip_optimal_branching_rule(tbl, OptimalBranchingCore.IPSolver())
     obj_val_upper = ip.upper_bound
     upper_bound_vec = ip.upper_bound_vec
     count_branch = 0
