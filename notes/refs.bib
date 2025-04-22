@@ -1,0 +1,46 @@
+@misc{Gao2024,
+  title = {Automated {{Discovery}} of {{Branching Rules}} with {{Optimal Complexity}} for the {{Maximum Independent Set Problem}}},
+  author = {Gao, Xuan-Zhao and Wang, Yi-Jia and Zhang, Pan and Liu, Jin-Guo},
+  year = {2024},
+  month = dec,
+  number = {arXiv:2412.07685},
+  eprint = {2412.07685},
+  primaryclass = {math},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2412.07685},
+  urldate = {2024-12-12},
+  abstract = {The branching algorithm is a fundamental technique for designing fast exponential-time algorithms to solve combinatorial optimization problems exactly. It divides the entire solution space into independent search branches using predetermined branching rules, and ignores the search on suboptimal branches to reduce the time complexity. The complexity of a branching algorithm is primarily determined by the branching rules it employs, which are often designed by human experts. In this paper, we show how to automate this process with a focus on the maximum independent set problem. The main contribution is an algorithm that efficiently generate optimal branching rules for a given sub-graph with tens of vertices. Its efficiency enables us to generate the branching rules on-the-fly, which is provably optimal and significantly reduces the number of branches compared to existing methods that rely on expert-designed branching rules. Numerical experiment on 3-regular graphs shows an average complexity of O(1.0441{\textasciicircum}n) can be achieved, better than any previous methods.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Data Structures and Algorithms,Mathematics - Combinatorics,Mathematics - Optimization and Control},
+  file = {/Users/liujinguo/Zotero/storage/P9SPT8SD/Gao et al. - 2024 - Automated Discovery of Branching Rules with Optimal Complexity for the Maximum Independent Set Probl.pdf;/Users/liujinguo/Zotero/storage/RYNKT9TQ/2412.html}
+}
+
+@article{Achterberg2009a,
+  title = {Constraint {{Integer Programming}}},
+  author = {Achterberg, Tobias},
+  year = {2009},
+  month = jan,
+  urldate = {2025-03-29},
+  abstract = {This thesis introduces the novel paradigm of "constraint integer programming" (CIP), which integrates constraint programming (CP) and mixed integer programming (MIP) modeling and solving techniques. It is supplemented by the software SCIP, which is a solver and framework for constraint integer programming that also features SAT solving techniques. SCIP is freely available in source code for academic and non-commercial purposes. Our constraint integer programming approach is a generalization of MIP that allows for the inclusion of arbitrary constraints, as long as they turn into linear constraints on the continuous variables after all integer variables have been fixed. The constraints, may they be linear or more complex, are treated by any combination of CP and MIP techniques: the propagation of the domains by constraint specific algorithms, the generation of a linear relaxation and its solving by LP methods, and the strengthening of the LP by cutting plane separation. The current version of SCIP comes with all of the necessary components to solve mixed integer programs. In the thesis, we cover most of these ingredients and present extensive computational results to compare different variants for the individual building blocks of a MIP solver. We focus on the algorithms and their impact on the overall performance of the solver. In addition to mixed integer programming, the thesis deals with chip design verification, which is an important topic of electronic design automation. Chip manufacturers have to make sure that the logic design of a circuit conforms to the specification of the chip. Otherwise, the chip would show an erroneous behavior that may cause failures in the device where it is employed. An important subproblem of chip design verification is the property checking problem, which is to verify whether a circuit satisfies a specified property. We show how this problem can be modeled as constraint integer program and provide a number of problem-specific algorithms that exploit the structure of the individual constraints and the circuit as a whole. Another set of extensive computational benchmarks compares our CIP approach to the current state-of-the-art SAT methodology and documents the success of our method.},
+  langid = {english},
+  file = {/Users/liujinguo/Zotero/storage/X7RHWBTM/Achterberg - 2009 - Constraint Integer Programming.pdf}
+}
+
+@article{Achterberg2009b,
+  title = {{{SCIP}}: Solving Constraint Integer Programs},
+  shorttitle = {{{SCIP}}},
+  author = {Achterberg, Tobias},
+  year = {2009},
+  month = jul,
+  journal = {Mathematical Programming Computation},
+  volume = {1},
+  number = {1},
+  pages = {1--41},
+  issn = {1867-2957},
+  doi = {10.1007/s12532-008-0001-1},
+  urldate = {2025-04-06},
+  abstract = {Constraint integer programming (CIP) is a novel paradigm which integrates constraint programming (CP), mixed integer programming (MIP), and satisfiability (SAT) modeling and solving techniques. In this paper we discuss the software framework and solver SCIP (Solving Constraint Integer Programs), which is free for academic and non-commercial use and can be downloaded in source code. This paper gives an overview of the main design concepts of SCIP and how it can be used to solve constraint integer programs. To illustrate the performance and flexibility of SCIP, we apply it to two different problem classes. First, we consider mixed integer programming and show by computational experiments that SCIP is almost competitive to specialized commercial MIP solvers, even though SCIP supports the more general constraint integer programming paradigm. We develop new ingredients that improve current MIP solving technology. As a second application, we employ SCIP to solve chip design verification problems as they arise in the logic design of integrated circuits. This application goes far beyond traditional MIP solving, as it includes several highly non-linear constraints, which can be handled nicely within the constraint integer programming framework. We show anecdotally how the different solving techniques from MIP, CP, and SAT work together inside SCIP to deal with such constraint classes. Finally, experimental results show that our approach outperforms current state-of-the-art techniques for proving the validity of properties on circuits containing arithmetic.},
+  langid = {english},
+  keywords = {90-08,Constraint programming,Integer programming,Primary: 90C11,SAT,Secondary: 90-04},
+  file = {/Users/liujinguo/Zotero/storage/JQRH97LV/Achterberg - 2009 - SCIP solving constraint integer programs.pdf}
+}
