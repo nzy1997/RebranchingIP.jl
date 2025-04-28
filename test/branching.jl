@@ -25,9 +25,10 @@ end
 
 @testset "branching_table" begin
     g = smallgraph(:petersen)
-    ip = get_IP(g)
-    tbl = branching_table(ip, [1,2])
+    problem = MaximalIS(g)
+    ip = get_IP(problem)
+    tbl = ip_branching_table(ip, [1,2])
 
-    # ip_optimal_branching_rule(tbl, IPSolver())
-    branching(ip, 1)
+    res = ip_optimal_branching_rule(tbl, IPSolver())
+    @test res.γ ≈ 2 atol = 1e-8
 end
