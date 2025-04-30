@@ -1,6 +1,10 @@
 #show link: set text(blue)
 #import "@preview/cetz:0.2.2": canvas, draw, tree
 
+#let jinguo(it) = [
+  #text(12pt, text(red)[[JG: #it]])
+]
+
 #align(center, text(size: 18pt)[Rebranching integer programming\
 #text(12pt, [_Jin-Guo Liu_ and _Zhong-Yi Ni_])
 ])
@@ -111,5 +115,18 @@ Each branch is associated with a *upper bound* and *lower bound* of the objectiv
 If the upper bound of one branch is infeasible, or its upper bound is lower than the lower bound of another branch,
 we can prune the branch. The upper bound is computed with the linear programming relaxation, while the lower bound is a bit tricky.
 For simplicity, we can round the variables to the nearest integer, and compute the objective value.
+
+= Restarting
+
+#jinguo([The following content is from Achterberg's PhD thesis.])
+
+Restarts are a well-known and very important ingredient of modern SAT solvers like BerkMin, MiniSat, or zChaff.
+Nevertheless, they have not been used so far for solving MIPs.
+
+SAT is based conflict analysis. MIP is different:
+- First, they process the nodes in a best first or similar order, thereby producing much longer lists of open subproblems during the search than depth first search based SAT solvers.
+- Second, apart from the branching decisions and domain propagations, they store the LP warm start information in the tree. These data are very expensive to obtain since it requires the solving of the subproblems’ LP relaxations. Thus, by discarding the search tree, MIP solvers waste much more information than SAT solvers, namely all the warm start LP bases that have been stored for the open leaves of the tree.
+
+The most important ingredients of an MIP solver implementation are a fast and numerically stable LP solver, cutting plane separators, primal heuristics, and presolving algorithms (see Bixby et al. [46]). Additionally, the applied branching rule is of major importance (see Achterberg, Koch, and Martin [5]). Necessary infrastructure includes the management of subproblem modifications, LP warm start information, and a cut pool.
 
 #bibliography("refs.bib")
