@@ -10,6 +10,6 @@ using ProblemReductions.Graphs
 include("lp.jl")
 include("branching.jl")
 
-export IP, branching
+export IP, branching, solve_mis
 
 end
